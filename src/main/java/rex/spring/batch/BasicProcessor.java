@@ -15,7 +15,15 @@ public class BasicProcessor implements ItemProcessor<String, String> {
     @Override
     public String process(final String person) throws Exception {
         log.info("Processing " + person);
-
+        
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<Person>> violations = validator.validate(parent);
+        
+        for (ConstraintViolation<Person> violation : violations) {
+            System.err.println(violation.getMessage());
+        }
+        
         return person;
     }
 
