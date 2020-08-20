@@ -1,10 +1,13 @@
 package rex.spring.batch;
 
 import org.springframework.batch.core.*;
+import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.job.DefaultJobParametersValidator;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
@@ -13,11 +16,15 @@ import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
 import rex.spring.batch.step1.BasicProcessor;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableBatchProcessing
+@Import(DataSourceConfiguration.class)
 public class BatchConfiguration {
 
     @Autowired
@@ -27,13 +34,14 @@ public class BatchConfiguration {
     public StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Job importUserJob(Step step1) {
+    public Job importUserJob(JobRepository jobRepository, Step step1) {
 		DefaultJobParametersValidator jobParametersValidator = new DefaultJobParametersValidator(
 				new String[]{},
 				new String[]{"dryrun"});
 
 		return jobBuilderFactory.get("importUserJob")
 				.validator(jobParametersValidator)
+                .repository(jobRepository)
 				.flow(step1)
 				.end()
 				.build();

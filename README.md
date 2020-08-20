@@ -14,3 +14,6 @@ Notions abordées :
 - utilisation de javax.validation dans le processor pour valider les données avant de les traiter (les stocker en base le cas échéant)
 - utilisation du skip (dans quelle condition ?)
 - mise en place d'un listener onError pour catcher les runtimeException et avertir l'utilisateur
+
+
+//To create databases for spring batch, go find the script in the package org.springframework.batch.core
