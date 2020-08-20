@@ -5,13 +5,16 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.job.DefaultJobParametersValidator;
-import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.mapping.DefaultLineMapper;
+import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Arrays;
+import org.springframework.core.io.ClassPathResource;
+import rex.spring.batch.step1.BasicProcessor;
 
 @Configuration
 @EnableBatchProcessing
@@ -37,10 +40,32 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public Step step1(ItemWriter writer) {
+    public FlatFileItemReader<Person> itemReader() {
+//        BeanWrapperFieldSetMapper<Person> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+//        fieldSetMapper.setTargetType(Person.class);
+
+        DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
+        lineTokenizer.setDelimiter(",");
+        lineTokenizer.setNames("name", "age");
+
+        DefaultLineMapper<Person> lineMapper = new DefaultLineMapper<>();
+//        lineMapper.setFieldSetMapper(fieldSetMapper);
+        lineMapper.setLineTokenizer(lineTokenizer);
+
+        FlatFileItemReader<Person> flatFileItemReader = new FlatFileItemReader<>();
+        flatFileItemReader.setName("personItemReader");
+        flatFileItemReader.setResource(new ClassPathResource("sample-data.csv"));
+        flatFileItemReader.setLineMapper(lineMapper);
+        flatFileItemReader.setLinesToSkip(1);
+
+        return flatFileItemReader;
+    }
+
+    @Bean
+    public Step step1(ItemReader<Person> itemReader, ItemWriter<Person> writer) {
         return stepBuilderFactory.get("step1")
-                .<String, String>chunk(10)
-                .reader(new BasicReader())
+                .<Person, Person>chunk(10)
+                .reader(itemReader)
                 .processor(new BasicProcessor())
                 .writer(writer)
                 .build();
