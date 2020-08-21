@@ -6,6 +6,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
+import rex.spring.batc.Hobby;
 
 public class Person {
 
@@ -20,7 +21,7 @@ public class Person {
     private String email;
 
     @Valid
-    private List<Person> children;
+    private List<Hobby> hobbies;
 
     public String getName() {
         return name;
@@ -46,11 +47,11 @@ public class Person {
         this.email = email;
     }
 
-    public List<Person> getChildren() {
+    public List<Hobby> getHobbies() {
         return children;
     }
 
-    public void setChildren(List<Person> children) {
-        this.children = children;
+    public void setHobbies(List<Hobby> hobbies) {
+        this.hobbies = hobbies;
     }
 }
