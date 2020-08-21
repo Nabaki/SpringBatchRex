@@ -6,16 +6,28 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
+/**
+* Pas de fichiers de properties pour garder le projet aussi simple que possible.
+*/
 @Configuration
 public class DataSourceConfiguration {
 
     @Bean
     public DataSource getDataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName("org.postgresql.Driver");
-        dataSourceBuilder.url("jdbc:postgresql:localhost:5432/SpringBatchRex");
+        dataSourceBuilder.url("jdbc:postgresql://localhost:5432/SpringBatchRex");
         dataSourceBuilder.username("postgres");
-        dataSourceBuilder.password("");
         return dataSourceBuilder.build();
     }
+
+    
+    @Bean
+    public DataSource getPGDataSource() {
+        PGSimpleDataSource dataSource = new PGSimpleDataSource();
+        dataSource.setDatabaseName("SpringBatchRex");
+        dataSource.setServerName("localhost");
+        dataSource.setUser("postgres");
+        //dataSource.setPassword("admin");
+        return dataSource
+   }
 }
