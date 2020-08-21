@@ -1,0 +1,2 @@
+@Autowire
+private ApplicationArguments applicationArguments;
