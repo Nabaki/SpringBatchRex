@@ -13,7 +13,7 @@ public class DataSourceConfiguration {
     public DataSource getDataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.postgresql.Driver");
-        dataSourceBuilder.url("jdbc:postgresql:SpringBatchRex:5432");
+        dataSourceBuilder.url("jdbc:postgresql:localhost:5432/SpringBatchRex");
         dataSourceBuilder.username("postgres");
         dataSourceBuilder.password("");
         return dataSourceBuilder.build();
