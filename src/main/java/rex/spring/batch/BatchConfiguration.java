@@ -54,11 +54,11 @@ public class BatchConfiguration {
 
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
         lineTokenizer.setDelimiter(",");
-        lineTokenizer.setNames("name", "age");
+        lineTokenizer.setNames("name", "age", "email", "hobby");
 
-        DefaultLineMapper<Person> lineMapper = new DefaultLineMapper<>();
-//        lineMapper.setFieldSetMapper(fieldSetMapper);
-        lineMapper.setLineTokenizer(lineTokenizer);
+        //DefaultLineMapper<Person> lineMapper = new DefaultLineMapper<>();
+        //lineMapper.setFieldSetMapper(fieldSetMapper);
+        //lineMapper.setLineTokenizer(lineTokenizer);
 
         FlatFileItemReader<Person> flatFileItemReader = new FlatFileItemReader<>();
         flatFileItemReader.setName("personItemReader");
