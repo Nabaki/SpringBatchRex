@@ -10,11 +10,13 @@ import rex.spring.batch.Person;
 
 import java.util.List;
 
+import static rex.spring.batch.validator.DRY_RUN;
+
 @Component
 @StepScope
 public class BasicWriter implements ItemWriter<Person> {
 
-    @Value("#{jobParameters['dryrun']?:true}")
+    @Value("#{jobParameters['" + DRY_RUN + "']}")
     private boolean dryrun;
 
     private static final Logger log = LoggerFactory.getLogger(BasicWriter.class);
