@@ -17,3 +17,4 @@ Notions abordées :
 
 
 //To create databases for spring batch, go find the script in the package org.springframework.batch.core
+cf https://docs.spring.io/spring-batch/docs/current/reference/html/schema-appendix.html#exampleDDLScripts
