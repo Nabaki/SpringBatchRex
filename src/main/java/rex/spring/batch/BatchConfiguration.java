@@ -1,16 +1,15 @@
 package rex.spring.batch;
 
 import org.springframework.batch.core.*;
-import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.job.DefaultJobParametersValidator;
 import org.springframework.batch.core.repository.JobRepository;
-import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ClassPathResource;
+import rex.spring.batch.model.Person;
 import rex.spring.batch.step1.BasicProcessor;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableBatchProcessing
@@ -49,16 +47,15 @@ public class BatchConfiguration {
 
     @Bean
     public FlatFileItemReader<Person> itemReader() {
-//        BeanWrapperFieldSetMapper<Person> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
-//        fieldSetMapper.setTargetType(Person.class);
+        BeanWrapperFieldSetMapper<Person> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+        fieldSetMapper.setTargetType(Person.class);
 
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
-        lineTokenizer.setDelimiter(",");
         lineTokenizer.setNames("name", "age", "email", "hobby");
 
-        //DefaultLineMapper<Person> lineMapper = new DefaultLineMapper<>();
-        //lineMapper.setFieldSetMapper(fieldSetMapper);
-        //lineMapper.setLineTokenizer(lineTokenizer);
+        DefaultLineMapper<Person> lineMapper = new DefaultLineMapper<>();
+        lineMapper.setFieldSetMapper(fieldSetMapper);
+        lineMapper.setLineTokenizer(lineTokenizer);
 
         FlatFileItemReader<Person> flatFileItemReader = new FlatFileItemReader<>();
         flatFileItemReader.setName("personItemReader");

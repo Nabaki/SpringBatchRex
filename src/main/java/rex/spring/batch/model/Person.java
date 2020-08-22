@@ -1,4 +1,4 @@
-package rex.spring.batch;
+package rex.spring.batch.model;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -6,7 +6,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
-import rex.spring.batc.Hobby;
 
 public class Person {
 
@@ -48,7 +47,7 @@ public class Person {
     }
 
     public List<Hobby> getHobbies() {
-        return children;
+        return hobbies;
     }
 
     public void setHobbies(List<Hobby> hobbies) {

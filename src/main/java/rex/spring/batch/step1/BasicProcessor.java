@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
-import rex.spring.batch.Person;
+import rex.spring.batch.model.Person;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

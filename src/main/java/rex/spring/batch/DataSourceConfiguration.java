@@ -1,6 +1,6 @@
 package rex.spring.batch;
 
-import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,14 +12,13 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfiguration {
 
-    @Bean
+    /*@Bean
     public DataSource getDataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.url("jdbc:postgresql://localhost:5432/SpringBatchRex");
         dataSourceBuilder.username("postgres");
         return dataSourceBuilder.build();
-    }
-
+    }*/
     
     @Bean
     public DataSource getPGDataSource() {
@@ -28,6 +27,6 @@ public class DataSourceConfiguration {
         dataSource.setServerName("localhost");
         dataSource.setUser("postgres");
         //dataSource.setPassword("admin");
-        return dataSource
+        return dataSource;
    }
 }

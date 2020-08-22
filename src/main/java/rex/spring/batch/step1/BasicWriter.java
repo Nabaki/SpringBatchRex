@@ -6,11 +6,11 @@ import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import rex.spring.batch.Person;
+import rex.spring.batch.model.Person;
 
 import java.util.List;
 
-import static rex.spring.batch.validator.DRY_RUN;
+import static rex.spring.batch.validator.Inputs.DRY_RUN;
 
 @Component
 @StepScope
